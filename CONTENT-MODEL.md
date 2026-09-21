@@ -179,6 +179,25 @@ that keeps the core small.
 system is too weak.** The test for this layer is whether a client site can add a
 service by declaring one, rather than by writing Go templates.
 
+### When to reach for a custom type
+
+**When the contract differs.** New fields a template has to be able to rely on, new
+taxonomies, new views, a different schema node.
+
+Not for either of the reasons it is usually reached for:
+
+- **Not for an archive.** Sections give list pages away free. Items that merely
+  live together and want a listing are a section of `page`s.
+- **Not for hierarchy.** `hierarchical` is a property a type *declares*, not a
+  thing only pages get. `service` declares it, because a service branches into
+  audience variants.
+
+So `page` is **not** the residual bucket for standing, unstructured content. It is
+the built-in hierarchical type carrying a minimal contract — title, body, weight,
+position in the tree — exactly as in WordPress. A page stops being a `page` when a
+template needs to rely on a field the page type does not grant, and at no point
+before that.
+
 ### Where type definitions live
 
 `data/types/<name>.toml`, shipped with Pulse and inherited by every client site. A
@@ -434,8 +453,13 @@ item is special.
 
 ## Pages and posts
 
-**At the storage layer there is no difference.** Both are items. One choice
-separates them — hierarchical or not — and three things follow from it.
+**At the storage layer there is no difference.** Both are items. They are the two
+**built-in** types, one hierarchical and one not, and three things follow from
+which is which.
+
+A caution before the table: hierarchy is what separates *these two built-ins*, not
+what separates pages from every other type. A custom type declares its own
+hierarchy — see [When to reach for a custom type](#when-to-reach-for-a-custom-type).
 
 | | page | post |
 |---|---|---|
@@ -475,6 +499,17 @@ That distinction settles three things:
 | `effective` | date | no | when this version took effect |
 | `revised` | date | no | when it was last revised |
 | `supersedes` | path | no | the version this replaces, where it is kept |
+| `revisions` | list of `{date, note}` | no | renders at the foot of the page |
+
+`version`, `effective`, `revised` and `supersedes` are machine-facing — they are
+what the check reads. `revisions` is reader-facing: the change and its date, at the
+foot of the document, so that someone who relied on an earlier version can see that
+it moved and when.
+
+Both halves are needed. Fields without a visible block record the change where only
+a build sees it; a block without fields cannot be checked. **Shared with the
+Spectrum theme** — its citation convention is the same foot-block, and the two
+should not diverge.
 
 ### The check
 

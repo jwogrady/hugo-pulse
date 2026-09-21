@@ -1,4 +1,8 @@
 # The static tree. Hierarchical, outside the feed, no taxonomy.
+#
+# Not the residual bucket for anything that is not a post. This is the built-in
+# hierarchical type carrying a minimal contract; a page stops being a page when a
+# template needs a field this type does not grant, and not before.
 
 name = 'page'
 schema = 'WebPage'
