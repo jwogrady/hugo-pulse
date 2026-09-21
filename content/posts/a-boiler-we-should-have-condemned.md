@@ -3,6 +3,8 @@ title = 'A Boiler We Should Have Condemned'
 date = 2026-02-16T19:30:00-06:00
 summary = 'Repaired it twice in five weeks. Should have failed it the first time and said so.'
 tags = ['callbacks']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Commercial unit, twenty-six years old, tenant chapel hall with a full

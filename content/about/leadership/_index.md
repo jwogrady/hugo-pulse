@@ -21,6 +21,8 @@ views = ['full', 'teaser', 'card']
   aspect = '1:1'
   max = 1
   profile = 'portrait'
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 No account managers. If you are talking to someone here, they have been under

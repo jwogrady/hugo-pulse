@@ -12,6 +12,8 @@ revised = 2026-01-05
 [[revisions]]
   date = 2026-01-05
   note = 'After-hours cover stated explicitly. It was verbal before.'
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 **(608) 555-0117** — normal hours are 7am to 5pm, Monday to Friday. The same

@@ -9,6 +9,8 @@ audience = ['Residential']
 service-areas = ['Crawford County']
 
 weight = 20
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 We will not quote a treatment system without a current test. Anyone who does

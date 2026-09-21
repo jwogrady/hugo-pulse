@@ -9,6 +9,8 @@ views = ['full', 'teaser']
 
 [media]
   required = false
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Founded 1987. Still the same shop, mostly the same vans.

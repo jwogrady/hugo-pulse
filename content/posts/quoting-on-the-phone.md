@@ -2,6 +2,8 @@
 title = 'Every Quote We Gave on the Phone Was Wrong'
 date = 2026-03-02T11:45:00-06:00
 tags = ['pricing']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 We stopped doing it in 2019 and I have gone back through why.

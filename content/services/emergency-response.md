@@ -15,6 +15,8 @@ service-areas = [
 ]
 
 weight = 10
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 You call, someone picks up. Not a service, not a queue — whoever is on rota

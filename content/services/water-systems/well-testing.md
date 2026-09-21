@@ -11,6 +11,8 @@ audience = ['Residential']
 service-areas = ['Crawford County']
 
 weight = 10
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Once a year, and after any work on the well, the pump, or the pressure tank.

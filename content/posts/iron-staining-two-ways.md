@@ -3,6 +3,8 @@ title = 'Iron Staining, Two Ways'
 date = 2026-02-09T14:05:00-06:00
 summary = 'Same orange stain, two different problems, two different systems. The test tells you which.'
 tags = ['well water']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Both customers described it identically: orange staining in the bath, worse in

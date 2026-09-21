@@ -14,6 +14,8 @@ reader = 'A homeowner who wants the furnace to start in November and does not wa
 voice = 'Direct and unpushy. Gives the price in the second paragraph.'
 
 weight = 20
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 You are buying a furnace that starts in November.

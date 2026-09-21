@@ -3,6 +3,8 @@ title = 'A Frozen Run in a Crawlspace'
 date = 2026-01-12T18:40:00-06:00
 summary = 'Thawed it, wrapped it, and went back three weeks later because wrapping it was not the fix.'
 tags = ['frozen pipes', 'callbacks']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Called out to a farmhouse near Gays Mills, no water upstairs, minus eighteen

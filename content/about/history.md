@@ -3,6 +3,8 @@ title = 'History'
 date = 2026-01-05T10:00:00-06:00
 summary = 'Started with one van and a domestic boiler round. Most of that round is still with us.'
 weight = 10
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Ray Meridian took the first call in March 1987, from a farmhouse outside

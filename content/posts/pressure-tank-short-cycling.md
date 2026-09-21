@@ -3,6 +3,8 @@ title = 'Short Cycling Kills Pumps Quietly'
 date = 2026-02-23T13:15:00-06:00
 summary = 'A failed bladder does not announce itself. It just shortens the life of the most expensive part of the system.'
 tags = ['well water']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 A pressure tank has one job: give the pump somewhere to push so it does not

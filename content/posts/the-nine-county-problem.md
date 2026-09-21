@@ -3,6 +3,8 @@ title = 'The Nine County Problem'
 date = 2026-03-09T10:20:00-06:00
 summary = 'Covering a wide rural patch means the drive is the job. We price it honestly rather than hiding it.'
 tags = ['well water']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Furthest corner of the patch is ninety minutes each way. On a well test that

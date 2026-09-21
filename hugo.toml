@@ -34,7 +34,10 @@ enableRobotsTXT = true
   # this demo. A model with a type whose purpose is customer-verified proof cannot
   # ship invented examples of it; that is a fabricated review with a neutral
   # filename on it. The business with none is the one worth showing anyway.
-  sampleContent = true
+  # NOTE: there is deliberately no site-level sampleContent flag. The guard on
+  # the revision check is page-level only, because a site-level one is defeated
+  # by exactly the behaviour it defends against — a client copies this config on
+  # day one and silently loses the check on every document they ever write.
   description = 'Mechanical, plumbing and water systems for the Driftless region.'
   style = 'default'
   reader = 'Someone in the Driftless region with a building problem they did not choose to have.'

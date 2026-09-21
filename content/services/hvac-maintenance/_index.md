@@ -14,6 +14,8 @@ schema = 'Service'
 views = ['full', 'teaser', 'card']
 
 weight = 20
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Two visits a year, spring and autumn, servicing what is there rather than

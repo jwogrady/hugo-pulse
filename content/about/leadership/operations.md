@@ -7,6 +7,8 @@ weight = 10
 # This leaf overrides its branch: Dale writes long, so this one renders as an
 # article even though its siblings are profiles.
 type = 'page'
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Dale decides who goes where, which in a nine-county patch in February is most

@@ -21,6 +21,8 @@ views = ['full', 'teaser', 'card']
   aspect = '16:9'
   max = 1
   profile = 'lead'
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Three things we do. Everything else is one of these three with a different

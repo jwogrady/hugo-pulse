@@ -11,6 +11,8 @@ services = [
   '/services/hvac-maintenance/commercial',
   '/services/emergency-response',
 ]
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Commercial work is a different trade to domestic, even when the equipment is

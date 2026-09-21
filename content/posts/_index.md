@@ -14,6 +14,8 @@ views = ['full', 'teaser']
   aspect = '16:9'
   max = 1
   profile = 'lead'
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Notes from the van. Written on the day, not tidied up afterwards.

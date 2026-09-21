@@ -21,6 +21,8 @@ weight = 30
   aspect = '4:3'
   max = 1
   profile = 'lead'
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Mains water is somebody else's problem. A private well is yours, and it is the

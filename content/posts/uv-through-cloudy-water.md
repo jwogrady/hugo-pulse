@@ -3,6 +3,8 @@ title = 'UV Through Cloudy Water Is a Light Bill'
 date = 2026-02-02T15:20:00-06:00
 summary = 'A UV lamp on untreated water looks like it is working, which is the dangerous part.'
 tags = ['well water']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Inherited a system where someone had fitted UV straight onto a well with

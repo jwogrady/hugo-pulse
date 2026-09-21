@@ -3,6 +3,8 @@ title = 'The Softener That Was Not the Problem'
 date = 2026-01-19T17:10:00-06:00
 summary = 'Two callbacks on a softener that worked perfectly. The pressure tank had been dead for a year.'
 tags = ['well water', 'callbacks']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Customer reported the softener had stopped working — hard water at every tap,

@@ -5,6 +5,8 @@ summary = 'No water, no heat, or water where it should not be. What to do before
 weight = 5
 
 services = ['/services/emergency-response']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 **Call (608) 555-0117.** Someone picks up, day or night.

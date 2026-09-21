@@ -26,6 +26,21 @@ The business shown here has none of those things, which is also the cold-start c
 the model is designed around: what a site looks like on the day its owner has
 nothing to show yet. That is the honest version and the useful one.
 
+## Why every page carries its own flag
+
+Each file here declares `sampleContent = true` for itself. There is no site-level
+version of that flag, on purpose.
+
+A site-level flag would be inherited the moment someone copied the config to start
+a client site, and would silently switch off the revision check for every document
+that client ever wrote — including ones authored months later that have nothing to
+do with this demo. A flag that defeats itself when the directory is copied is no
+protection at all, since being copied is precisely what this directory is for.
+
+Page-level is verbose and fails in the right direction. Copy these pages and you
+get flagged pages you can see in a diff. Write your own page and it is checked from
+the first save, whatever you inherited.
+
 ## If you are starting a client site from this
 
 Do not copy `content/`. Copy the *shape* — the section declarations, the type

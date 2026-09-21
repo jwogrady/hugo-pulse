@@ -552,10 +552,50 @@ them is necessarily a different day. Measured here: `contact.md` declares
 which is worse than not having one. Caught by the Spectrum session before either
 of us shipped it.
 
-So it is **scoped to real documents**, by two guards:
+So it is **scoped to real documents**, by one guard:
 
-- skipped when `sampleContent` is set, at site level or on the page
-- otherwise active, which means it is live in a client site and dormant here
+**`sampleContent` is page-level only. There is no site-level form, deliberately.**
+
+A site-level flag is defeated by exactly the behaviour it defends against. The
+reason a fabricated rating is dangerous in a demo is that people copy demo
+directories without reading them — and the natural way to start a client site is
+to copy the config and edit it. One inherited line would silently disable the
+check on every document that client ever writes, including ones authored months
+later with nothing to do with sample content.
+
+Page-level fails in the right direction:
+
+- a client who copies our pages gets **flagged** pages, and clearing them is
+  per-page and visible in the diff
+- a client who writes **their own** page gets the check live immediately, whatever
+  they inherited or failed to clear
+
+The cost is a flag on all 26 demo pages instead of one line in config. That is the
+correct price: the demo is the thing making the declaration, so the demo is where
+the declaration should be verbose. A one-line site-level switch is cheap for us and
+expensive for every client, which is the wrong way round.
+
+Any site-level escape hatch added later must be **named for what it does, not for
+what the content is** — something a client would have to type on purpose and would
+look wrong in their config.
+
+### The skip has to be audible
+
+A guard that silently disables the check reintroduces the quietness one level up. A
+build where the check did not run is otherwise indistinguishable from one where it
+ran and passed, which is the same failure the check exists to prevent.
+
+So the exemption is announced once per build, naming the guard and the count of
+documents skipped.
+
+**Decided before wiring, because the obvious implementation is a trap.** Emitting
+it with `warnf` fails any build running `--panicOnWarning` — including our own,
+against our own demo. Suppressing it returns us to silence. So the announcement
+uses a warning with a **stable ID**, and a repository running `--panicOnWarning`
+must either clear its sample flags or suppress that specific ID in config.
+
+Both are deliberate, visible acts. Silence is not available by default, which is
+the whole point.
 
 The alternative — comparing against the commit that last touched the *body* rather
 than the file — is more precise, since a front-matter-only edit bumping `revised`

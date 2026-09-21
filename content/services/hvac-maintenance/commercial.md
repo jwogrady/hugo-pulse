@@ -13,6 +13,8 @@ reader = 'A facilities manager who will never see the plant room, buying a budge
 voice = 'Measured. Talks in years and line items, not in urgency.'
 
 weight = 10
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 You are buying predictability, not repairs.

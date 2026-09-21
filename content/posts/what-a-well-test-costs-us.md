@@ -3,6 +3,8 @@ title = 'What a Well Test Actually Costs Us'
 date = 2026-01-26T16:00:00-06:00
 summary = 'We charge $180. Here is where it goes, and why the cheap tests in the hardware store are not the same thing.'
 tags = ['well water', 'pricing']
+
+sampleContent = true  # fictional; exempts this page from the revision check
 +++
 
 Lab fee is $64 for bacteriological and nitrate. Courier to get it there cold
