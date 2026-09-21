@@ -1,7 +1,18 @@
 +++
-title = 'Posts'
-date = 2023-01-01T08:30:00-07:00
-draft = false
+title = 'Notes'
+date = 2026-01-05T08:30:00-06:00
+summary = 'Job notes, failures worth writing down, and what things actually cost.'
+
+format = 'article'
+schema = 'BlogPosting'
+voice = 'First person, past tense, specific. Names the part number and the price. Admits when the first fix was wrong.'
+views = ['full', 'teaser']
+
+[media]
+  required = false
+  aspect = '16:9'
+  max = 1
+  profile = 'lead'
 +++
 
-Tempor est exercitation ad qui pariatur quis adipisicing aliquip nisi ea consequat ipsum occaecat. Nostrud consequat ullamco laboris fugiat esse esse adipisicing velit laborum ipsum incididunt ut enim. Dolor pariatur nulla quis fugiat dolore excepteur. Aliquip ad quis aliqua enim do consequat.
+Notes from the van. Written on the day, not tidied up afterwards.

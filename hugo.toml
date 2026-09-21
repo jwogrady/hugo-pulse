@@ -1,22 +1,59 @@
 baseURL = 'https://example.org/'
 locale = 'en-US'
-title = 'My New Hugo Project'
+title = 'Meridian Field Services'
+
+# Dates come from front matter and nowhere else. Hugo otherwise falls back
+# through publishdate, lastmod and modified, and what those resolve to depends
+# on the checkout rather than on the content.
+[frontmatter]
+  date = ['date']
+
+# Unset, Hugo uses the build machine's zone and the same commit renders
+# different times on a laptop and in CI.
+timeZone = 'America/Chicago'
+
+# The trunk: what every branch shares. See CONTENT-MODEL.md.
+[params]
+  description = 'Mechanical, plumbing and water systems for the Driftless region.'
+  style = 'default'
+  voice = 'Plain, specific, unhurried. States what was done and what it cost.'
+  views = ['full', 'teaser']
+
+  [params.media]
+    required = false
+    profile = 'lead'
+
+  # One organisation node, referenced by everything else.
+  [params.schema]
+    type = 'ProfessionalService'
+    name = 'Meridian Field Services'
+    sameAs = []
+
+[taxonomies]
+  tag = 'tags'
+  service-category = 'service-categories'
+  service-area = 'service-areas'
 
 [menus]
   [[menus.main]]
-    name = 'Home'
-    pageRef = '/'
+    name = 'Services'
+    pageRef = '/services'
     weight = 10
 
   [[menus.main]]
-    name = 'Posts'
+    name = 'Notes'
     pageRef = '/posts'
     weight = 20
 
   [[menus.main]]
-    name = 'Tags'
-    pageRef = '/tags'
+    name = 'About'
+    pageRef = '/about'
     weight = 30
+
+  [[menus.main]]
+    name = 'Contact'
+    pageRef = '/contact'
+    weight = 40
 
 [module]
   [module.hugoVersion]

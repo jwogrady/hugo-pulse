@@ -1,9 +1,7 @@
 +++
 title = 'Home'
-date = 2023-01-01T08:00:00-07:00
-draft = false
+date = 2026-01-05T08:00:00-06:00
 +++
 
-Laborum voluptate pariatur ex culpa magna nostrud est incididunt fugiat
-pariatur do dolor ipsum enim. Consequat tempor do dolor eu. Non id id anim anim
-excepteur excepteur pariatur nostrud qui irure ullamco.
+Mechanical, plumbing and water systems for the Driftless region. We do the
+unglamorous half of a building — the part you only notice when it stops.
