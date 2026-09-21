@@ -72,6 +72,30 @@ docs: document the menu configuration options
 chore(deps): bump release-please-action to v4
 ```
 
+## Local development
+
+**Always pass the port explicitly.**
+
+```bash
+hugo server --port 1315
+```
+
+| port | repo |
+|---|---|
+| 1313 | jwogrady.com |
+| 1314 | hugo-spectrum |
+| 1315 | hugo-pulse |
+
+Left to itself Hugo takes 1313 when it is free and a **random high port** when it
+is not. With three sites under development on one machine that is a coin toss, and
+it has already produced a screenshot of a stale server on a port nobody chose —
+a capture that looked perfect while showing content rewritten an hour earlier.
+
+A capture with no `--port` in the command is a capture of whatever happened to
+answer. The unnamed port makes the *subject* indeterminate, not just the
+measurement, and "the page looks wrong" is indistinguishable from "I am looking at
+the wrong site" after the fact.
+
 ## Pull requests
 
 - **Squash merge only.** A GitHub merge commit repeats the PR title in its body,
