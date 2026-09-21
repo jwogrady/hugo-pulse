@@ -5,6 +5,7 @@ summary = 'What we are called out for, what it involves, and what it costs when 
 
 format = 'listing'
 schema = 'Service'
+reader = 'Someone deciding whether to call us, who wants to know the scope and the cost before they do.'
 voice = 'Second person, present tense. States scope and exclusions plainly. Never says "solutions".'
 style = 'catalogue'
 views = ['full', 'teaser', 'card']

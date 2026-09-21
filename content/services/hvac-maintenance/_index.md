@@ -7,7 +7,6 @@ serviceType = 'HVAC system maintenance'
 priceRange = '$$'
 
 audience = ['Commercial', 'Residential']
-response = ['Scheduled']
 service-areas = ['Crawford County', 'Vernon County', 'Grant County']
 
 format = 'listing'

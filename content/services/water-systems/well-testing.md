@@ -8,7 +8,6 @@ price = 180
 currency = 'USD'
 
 audience = ['Residential']
-response = ['Scheduled']
 service-areas = ['Crawford County']
 
 weight = 10

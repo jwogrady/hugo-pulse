@@ -8,8 +8,10 @@ price = 165
 currency = 'USD'
 
 audience = ['Residential']
-response = ['Scheduled']
 service-areas = ['Crawford County', 'Vernon County', 'Grant County']
+
+reader = 'A homeowner who wants the furnace to start in November and does not want a contract.'
+voice = 'Direct and unpushy. Gives the price in the second paragraph.'
 
 weight = 20
 +++

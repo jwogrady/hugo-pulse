@@ -16,6 +16,7 @@ timeZone = 'America/Chicago'
 [params]
   description = 'Mechanical, plumbing and water systems for the Driftless region.'
   style = 'default'
+  reader = 'Someone in the Driftless region with a building problem they did not choose to have.'
   voice = 'Plain, specific, unhurried. States what was done and what it cost.'
   views = ['full', 'teaser']
 

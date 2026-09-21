@@ -7,8 +7,10 @@ serviceType = 'Commercial HVAC maintenance contract'
 priceRange = '$$$'
 
 audience = ['Commercial']
-response = ['Scheduled']
 service-areas = ['Crawford County', 'Vernon County', 'Grant County']
+
+reader = 'A facilities manager who will never see the plant room, buying a budget line.'
+voice = 'Measured. Talks in years and line items, not in urgency.'
 
 weight = 10
 +++

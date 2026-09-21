@@ -7,6 +7,34 @@ This is a contract, not a suggestion. Templates may only read fields defined her
 and a site that supplies nothing but the required fields must still build and still
 look deliberate.
 
+## What a page is for
+
+Pulse engineers a page to find **one specific audience**, in service of the brand.
+The method is to **describe a problem in a voice that reader will appreciate and
+respond to.**
+
+Everything below is downstream of that sentence.
+
+**A page leads with a problem, not an offering.** "There is water coming through
+the kitchen ceiling" is what someone types at 2am. "Emergency Plumbing Services"
+is what a business calls it in a brochure. The page has to start where the reader
+already is, in the words they already used.
+
+**Voice is targeting, not decoration.** The same facts, written for a homeowner in
+a panic and for a facilities manager building next year's budget, are two pages —
+because a voice that lands with one bounces off the other. This is why `voice` is
+declared on a section rather than left to whoever writes next, and why a service
+splits when its audiences need different framing.
+
+**Findability is part of the engineering.** A page perfectly pitched to an audience
+that cannot find it has not done its job. That is why taxonomy uses the customer's
+vocabulary rather than the industry's, and why indexation comes before everything
+else for a business that has no brand yet.
+
+The test for whether a page should exist: **can you name the one person it is for,
+and the problem they have right now?** If not, it is a brochure page — and brochure
+pages are what most of the internet is already made of.
+
 ## Scope
 
 Two ways of saying the same thing, and both are load-bearing.
@@ -162,7 +190,8 @@ Declared in the section's `_index.md`:
 | `title` | string | **yes** | |
 | `format` | string | **yes** | the shape of an item — `article`, `profile`, `record`, `listing` |
 | `schema` | string | **yes** | the schema.org type its items are — see [Schema](#schema) |
-| `voice` | string | no | named voice, or prose describing it; editorial guidance, not rendering |
+| `reader` | string | no | the one person this section is written for |
+| `voice` | string | no | how it sounds to that reader; targeting, not decoration |
 | `style` | string | no | visual treatment key; selects the section's typographic and colour handling |
 | `media` | map | no | the media contract for items — see below |
 | `views` | list | no | which views items support; defaults to `[full, teaser]` |
@@ -181,10 +210,14 @@ A Team section requires one 1:1 headshot. A Case Studies section allows an
 unbounded 16:9 gallery. A Policies section carries no media at all and says so, so
 that a missing image is never mistaken for an oversight.
 
-**Voice is editorial, not technical.** It does not render. It exists so that
-whoever writes the next item — a person, or a model — knows what the section
-sounds like without reverse-engineering it from the items already in it. A section
-whose voice cannot be stated in a sentence is probably two sections.
+**`reader` and `voice` are the targeting.** Neither renders. They exist so that
+whoever writes the next item — a person, or a model — knows who it is for and how
+it should sound, without reverse-engineering both from the items already there.
+
+They are also the test from [What a page is for](#what-a-page-is-for), applied one
+level up. A section that cannot name its reader in a phrase is not a section yet.
+A section whose voice cannot be stated in a sentence is usually two sections that
+have not been separated.
 
 ## Views
 
@@ -423,13 +456,72 @@ adding one must never require touching a page that does not use it.
 
 ## Navigation and intent
 
-Taxonomy here is not a filing exercise. It exists so that search engines can crawl
-a clean structure and so that a customer lands on the version of a service that
-matches why they are looking. Where those two pull apart, this section says which
-wins.
+Taxonomy here is not a filing exercise. It exists so that search engines and
+chatbots can find the site, and so that a customer lands on the version of a
+service that matches why they are looking.
 
-**Pulse makes these calls so that client sites do not have to.** Getting them wrong
-is how service sites end up with nine hundred thin pages and a manual action.
+**Pulse makes these calls so that client sites do not have to.**
+
+### The rule
+
+**A taxonomy dimension exists only if customers name it.** By industry standard
+where one governs, and in the customer's own words where the two differ — because
+their words are what gets typed into a search box or asked of a chatbot.
+
+The test is one question: *would a customer say this phrase?* If the answer is no,
+it is internal filing and does not belong in a taxonomy. Internal filing is what
+the tree is for.
+
+This is also the gate for indexing a term, which makes it the only gate. A phrase
+customers use has demand behind it whether one service sits under it or nine.
+
+Applied to this site's own terms:
+
+| term | would a customer say it? | verdict |
+|---|---|---|
+| Emergency | "emergency plumber" — high demand | keep |
+| Commercial | industry standard and customer phrase | keep |
+| Residential | same | keep |
+| After Hours | said, less often, still said | keep |
+| Scheduled | nobody searches "scheduled plumber" | **drop** |
+
+`Scheduled` was internal vocabulary wearing a customer-facing costume. It is not a
+thing anyone asks for; it is the absence of an emergency. A service with no
+`response` term is a scheduled service, and the absence carries the meaning without
+a page having to.
+
+### Indexation comes first
+
+Until a business has a brand, has sold to its first customer, and is actually
+running, **direct traffic is almost useless**. Discovery is the only channel it
+has. So Pulse indexes by default and treats being findable as the priority.
+
+The opposite instinct — withhold pages until they have earned their place — is the
+right answer for a site with brand equity and the wrong answer for the site Pulse
+is built for. A thin-content problem is one you get to have *after* you have pages
+worth crawling.
+
+So:
+
+- **Term pages are indexed.** Not on promotion, not on a count.
+- **The gate is vocabulary, not volume.** A customer phrase with one service behind
+  it still deserves its page, because the phrase is what has demand.
+- **A term you will not write an introduction for is a term that should not
+  exist.** That is one content decision made once, not an indexing decision
+  revisited forever.
+
+### The rule that still holds
+
+**Pulse never auto-generates an intersection.**
+
+No service × area. No audience × response. Indexing by default is not the same as
+generating by default, and the two get confused constantly.
+
+Nine counties times three services is twenty-seven pages that differ by a place
+name. Nobody searched for any of them in those words, so they fail the vocabulary
+test before they fail anything else. A combination page exists when someone has
+something to say about the combination — then it is an ordinary authored page, and
+it is indexed like everything else.
 
 ### Intent has dimensions, and they are not one bag
 
@@ -439,47 +531,13 @@ questions, and a single list of "categories" conflates them:
 | dimension | terms | changes |
 |---|---|---|
 | `audience` | Residential, Commercial | the whole framing — who decides, how it is priced, what proof matters |
-| `response` | Emergency, After Hours, Scheduled | what the reader is doing this minute |
+| `response` | Emergency, After Hours | what the reader is doing this minute |
 
 A homeowner at 2am and a facilities manager planning next year's budget may need
-the same work done and will not read the same page. Mixing those into one taxonomy
-produces a term list that answers neither.
+the same work done and will not read the same page.
 
 `response` deliberately avoids the name `availability`, which schema.org has
 already spent on stock levels.
-
-### Three mechanisms, chosen by job
-
-| mechanism | indexed | use for |
-|---|---|---|
-| **Section** (branch) | always | a destination with its own copy and real search demand |
-| **Taxonomy term** | `noindex, follow` by default | an attribute, for filtering and internal linking |
-| **Curated reference** | n/a | a page that lists items by path, without containing them |
-
-Taxonomy term pages are templated lists. They are weak destinations and always
-will be, because nothing on them was written for the person who landed there. So
-the SEO weight goes on **authored** pages, and taxonomies do the mechanical work of
-filtering and cross-linking.
-
-A term is promoted to indexed only when it earns it: an authored introduction, and
-enough items that the page is not one row. Promotion is a decision someone makes,
-never a default.
-
-### The rule that keeps the site small
-
-**Pulse never auto-generates an intersection.**
-
-No service × area. No audience × response. No "Commercial Emergency Plumbing in
-Crawford County" unless a person sat down and wrote one.
-
-Nine counties times three services is twenty-seven pages that differ by a place
-name. That is the single most common way a local service site is penalised, and it
-is always built with good intentions — every one of those pages was going to rank
-for something.
-
-A combination page exists when someone has something to say about the combination.
-Then it is an ordinary authored page in the tree, with its own copy, and it is
-indexed like any other.
 
 ### How a service serves two audiences
 
@@ -494,39 +552,41 @@ services/hvac-maintenance/
   residential.md     per-visit pricing, a homeowner reader
 ```
 
-That is the same leaf-becomes-branch rule as everywhere else, and it triggers on
-the same test: does this need its own page, or is it a paragraph?
+That is the same leaf-becomes-branch rule as everywhere else, triggered by the same
+test: does this need its own page, or is it a paragraph?
 
-When the content does not differ, one page carries both and the `audience`
-taxonomy records that it serves both. **Splitting a page that has nothing new to
-say is how thin content gets made.**
+When the content does not differ, one page carries both and `audience` records that
+it serves both. **Splitting a page that has nothing new to say is how thin content
+gets made.**
 
 ### Curated landing pages
 
 `/commercial/` is an authored page, not a term listing. It has its own copy about
-working with commercial customers, and it references the services that apply by
-path.
+working with commercial customers and references the services that apply by path.
 
-That gives the destination something to rank on, keeps one source of truth for
-each service, and means adding a service to the commercial offering is a line in a
-front matter list rather than a new page.
+That gives the destination something to rank on, keeps one source of truth per
+service, and means joining the commercial offering is a line in a front matter list
+rather than a new page.
 
 ## Taxonomies
 
-| taxonomy | applies to | means | indexed |
+| taxonomy | applies to | means | terms |
 |---|---|---|---|
-| `tags` | **posts only** | the *subjects* of a post | on promotion |
-| `audience` | services | who the customer is | on promotion |
-| `response` | services | how fast and when | `noindex` |
-| `service-areas` | services | where it is offered | on promotion |
+| `tags` | **posts only** | the *subjects* of a post | as written |
+| `audience` | services | who the customer is | Residential, Commercial |
+| `response` | services | urgency, when customers name it | Emergency, After Hours |
+| `service-areas` | services | where it is offered | the counties served |
+
+All of them are indexed. Every term above is a phrase a customer would use, which
+is the only gate — see [The rule](#the-rule).
 
 Pages are classified by their position in the tree. They do not carry tags; a page
 that wants to be found by subject is a post.
 
-`service-areas` is the one most likely to be misused. It records where a service is
-offered so a reader can check; it is **not** a licence to generate a page per area.
-An area earns an indexed page by having something written about it — a real branch,
-real jobs, real photographs — and nine counties will not all clear that bar.
+`service-areas` is the one most likely to be misused. Its term pages are indexed
+like the rest, because "plumber in Crawford County" is exactly how someone asks.
+What it is **not** is a licence to generate a page per service per area — that
+crossing fails the vocabulary test, because nobody phrases a search that way.
 
 `tags` means subjects — used sparingly, repeated deliberately, meaningful by
 frequency. It is not a keyword bag. This is the same meaning the Spectrum theme

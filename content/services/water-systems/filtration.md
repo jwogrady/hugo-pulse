@@ -6,7 +6,6 @@ summary = 'Softeners, iron removal and UV, specified from your test results rath
 serviceType = 'Water treatment system installation'
 
 audience = ['Residential']
-response = ['Scheduled']
 service-areas = ['Crawford County']
 
 weight = 20
