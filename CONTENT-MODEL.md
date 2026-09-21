@@ -9,10 +9,19 @@ look deliberate.
 
 ## Scope
 
+Two ways of saying the same thing, and both are load-bearing.
+
 **A website is a newspaper.** It has defined sections; each section's items share a
-media, style, format and voice; and those items render in one or more views. That
-frame is the model — the types below are what it is built from, and the sections
-are where the editorial decisions live.
+media, style, format, voice and schema; and those items render in one or more
+views. The sections are where the editorial decisions live.
+
+**A website is a folder tree.** Leaves are pages, branches are sections, and the
+trunk is what they all share.
+
+The newspaper frame explains what **differs** between one part of a site and
+another. The tree frame explains what is **inherited** and where it is stated. A
+decision that is hard to place in this model is usually one being made at the wrong
+height.
 
 This layer defines what **every entity brand** needs, regardless of what the
 business does.
@@ -27,11 +36,12 @@ Types:
 | **Menus** | top (sections) and side (parent–child) | — |
 | **Components** | reusable blocks inserted into pages | no |
 
-And three things that are not types but govern how types behave:
+And four things that are not types but govern how types behave:
 
 | | |
 |---|---|
-| **Sections** | a division of the paper; declares the media, style, format, voice and schema its items share |
+| **Trunk** | the site; what every branch shares, stated once |
+| **Sections** | branches; declare the media, style, format, voice and schema their leaves share |
 | **Views** | the renderings an item appears in — full, teaser, card, feature, mention |
 | **Schema** | one connected JSON-LD graph; the section declares the type, the view decides what is emitted |
 
@@ -103,12 +113,44 @@ than as templates: a client must be able to reskin without re-authoring. If a fi
 is defined only by the template that reads it, it is not part of the model — it is
 an accident of the current design.
 
+## The trunk
+
+What every branch shares. Declared once, in site config, and inherited by
+everything below unless something overrides it.
+
+| param | notes |
+|---|---|
+| `schema.*` | the organisation node — see [Schema](#schema) |
+| `style` | the base visual treatment |
+| `voice` | the house voice; a section deviates from it deliberately, not accidentally |
+| `media` | the default media contract |
+| `views` | the views a section supports unless it says otherwise |
+
+The trunk is also where the entity lives: the organisation, its name, its logo, the
+profiles it controls. One node, one place, referenced everywhere else.
+
+## Inheritance
+
+Three heights, resolved nearest-first: **leaf → branch → trunk.** A branch inside a
+branch resolves through its parent branch first.
+
+A leaf states only what makes it different from its branch. A branch states only
+what makes it different from the trunk. A field that has to be set at every height
+is a field whose default is wrong — fix the default rather than repeating the
+override.
+
+**Anything with children is a branch. Anything without is a leaf.** That is the
+whole rule, and it is also Hugo's own distinction between a branch bundle
+(`_index.md`) and a leaf bundle (`index.md`). A page that grows children becomes a
+section and starts declaring for them; nothing in front matter needs to change
+hands for that to happen, because the tree already said it.
+
 ## Sections
 
-A section is a division of the paper, not a folder that happens to have pages in
-it. Sports and Obituaries run in the same newspaper and share none of their
-treatment — different photography, different headline shape, different voice — and
-a reader can tell which section they are in without reading the masthead.
+A section is a branch: a division of the paper, not a folder that happens to have
+pages in it. Sports and Obituaries run in the same newspaper and share none of
+their treatment — different photography, different headline shape, different voice
+— and a reader can tell which section they are in without reading the masthead.
 
 A section declares what its items have in common. Everything in it inherits that;
 an item overrides only where it genuinely differs.
@@ -230,15 +272,16 @@ item is special.
 
 ## Pages
 
-Hierarchical, arbitrary depth. A page may have children; a child is a page.
+Leaves. Hierarchical, arbitrary depth — a page that acquires children has become a
+branch and declares for them, per [Inheritance](#inheritance).
 
 Static: outside the dated stream, absent from feeds, and carrying no taxonomy. A
 page is found by navigating to it, which is what the tree is for. Pages may have
 dates, but nothing sorts or groups by them.
 
-Structurally: a parent is a branch bundle (`_index.md`), a leaf is `index.md` in
-its own directory when it carries media, or a plain `.md` file when it does not.
-The directory tree *is* the hierarchy — nothing in front matter declares a parent.
+Structurally: a leaf is `index.md` in its own directory when it carries media, or a
+plain `.md` file when it does not. The directory tree *is* the hierarchy — nothing
+in front matter declares a parent, so the structure cannot disagree with itself.
 
 | field | type | required | notes |
 |---|---|---|---|
@@ -439,6 +482,11 @@ Demo content exists to attack this model, not to flatter it. It must include:
   where a section's style and its host page's style collide.
 - **A hierarchy three deep**, so breadcrumbs and the side menu have something real
   to render, next to a top-level page with no children at all.
+- **A branch inside a branch that overrides its parent**, and a leaf that overrides
+  its branch — inheritance is only proven where something disagrees with its
+  parent. A tree where every height agrees tests nothing.
+- **A leaf that becomes a branch**, to prove that acquiring a child changes what a
+  page is without anyone editing its front matter.
 - **A tag used once beside a tag used forty times.**
 - **A page with twelve images and one with none.**
 - **An item with no summary in a section that supports `teaser`** — the case where
