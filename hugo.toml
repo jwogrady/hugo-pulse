@@ -22,6 +22,16 @@ enableGitInfo = true
 
 # The trunk: what every branch shares. See CONTENT-MODEL.md.
 [params]
+  # SAMPLE CONTENT. Meridian Field Services does not exist. The county names are
+  # real because the fixture is worthless if it is not plausible; everything else
+  # — the company, the people, the jobs, the prices — is invented, and telephone
+  # numbers use the 555 reservation.
+  #
+  # There are deliberately no testimonials, case studies or ratings anywhere in
+  # this demo. A model with a type whose purpose is customer-verified proof cannot
+  # ship invented examples of it; that is a fabricated review with a neutral
+  # filename on it. The business with none is the one worth showing anyway.
+  sampleContent = true
   description = 'Mechanical, plumbing and water systems for the Driftless region.'
   style = 'default'
   reader = 'Someone in the Driftless region with a building problem they did not choose to have.'

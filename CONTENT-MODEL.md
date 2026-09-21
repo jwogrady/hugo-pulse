@@ -854,42 +854,87 @@ rebuilding because someone changed jobs.
 `rating` carry schema.org's meanings in both models. Shared **field vocabulary**,
 not shared taxonomy.
 
-## Fixtures
+## Fixtures and demo content
 
-Demo content exists to attack this model, not to flatter it. It must include:
+**Two artefacts, two jobs.** Sample content is asked to do three things that pull
+against each other:
 
-- **Three of everything** — three sections, three pages, three posts, three tags.
-- **Three sections that genuinely differ** in media, style, format and voice, so
-  that inheritance is exercised rather than assumed. One requiring media, one
-  forbidding it, one where it is optional — the third is the hard case, because it
-  is the only one where the same view has to handle both.
-- **Every declared view rendered at least once**, and a section that declares only
-  `full`, so that the absence of `teaser` is proven to be an error rather than a
-  silent fallback.
-- **An item that appears in a `feature` view outside its own section**, which is
-  where a section's style and its host page's style collide.
-- **A hierarchy three deep**, so breadcrumbs and the side menu have something real
-  to render, next to a top-level page with no children at all.
+1. **Find bugs** — unkind, edge-seeking, deliberately awkward
+2. **Be representative** — the shapes real clients actually have
+3. **Persuade** — show why this is worth choosing
+
+(1) and (3) conflict directly. A corpus optimised to persuade is flattering, and a
+flattering fixture is how the sibling theme's colour-ramp bug survived four
+releases: every fixture it had was large enough to hide the failure.
+
+So they are split. One corpus cannot be both the adversarial test and the sales
+pitch, and asking it to be produces something that is neither.
+
+### Synthetic fixtures — job 1
+
+Built by the check, in the check, and never committed as content. Free to be as
+ugly as they need to be, because nobody reads them.
+
+- **Three of everything.** Not zero, not one. Zero and one get written as tests
+  because they announce themselves as edge cases; *sparse but plural* is the shape
+  that passes for normal, so nobody writes it and nothing survives it.
+- **A corpus of one** — one item, one term. Every aggregate has to degrade
+  honestly where there is nothing to aggregate.
+- **A term used once beside a term used forty times**, so frequency-driven
+  presentation is exercised across its whole range.
 - **A branch inside a branch that overrides its parent**, and a leaf that overrides
-  its branch — inheritance is only proven where something disagrees with its
-  parent. A tree where every height agrees tests nothing.
-- **A leaf that becomes a branch**, to prove that acquiring a child changes what a
-  page is without anyone editing its front matter.
-- **A tag used once beside a tag used forty times.**
-- **A page with twelve images and one with none.**
-- **An item with no summary in a section that supports `teaser`** — the case where
-  a view has to invent something and will do it badly.
-- **A component used on five pages and a component used on one.**
-- **A page whose only content is components**, and one with no components at all.
-- **A site with three pages and no posts** — day one of a client engagement, which
-  every client passes through and most sites handle badly.
-- **A section that declares no action**, so that the missing next step is visible
-  as an unfinished section rather than quietly absent.
-- **A page whose action is an integration, rendered as though the integration
-  failed** — the fallback is the part that has to be tested, and it is the part
-  nobody ever looks at.
-- **Two sections with different actions**, so that inheriting the trunk's default
-  and overriding it are both exercised.
+  its branch. Inheritance is only proven where something disagrees; a tree where
+  every height agrees tests nothing.
+- **A leaf that becomes a branch**, proving a page changes what it is by acquiring
+  a child, with no front matter edited.
+- **Every declared view rendered**, and a section declaring only `full`, so the
+  absence of `teaser` is proven to be an error rather than a silent fallback.
+- **An item with no summary in a section that teases** — the case where a view has
+  to invent something and will do it badly.
+- **A document whose file changed after its `revised` date**, so the check fires.
+- **A page rendered as though its integration failed**, because the fallback is the
+  part nobody ever looks at.
 
-If the demo content contains only the cases we had in mind, the model will look
-complete and will not be.
+### The demo site — jobs 2 and 3
+
+Representative and persuasive, and free to be, because the adversarial work is
+happening elsewhere. It should read as a business someone actually runs.
+
+What it has to demonstrate, because these are the claims and prose cannot carry
+them:
+
+- **A page per service, not a services page.** Enough services that the difference
+  is visible — a URL with its own price and its own photographs, rather than the
+  fourth bullet on a list.
+- **One service area and nine**, the model working identically at both.
+- **A service that branches by audience**, where the content genuinely differs,
+  beside one that branches into sub-services. Two reasons to branch, both real.
+- **A document that has been revised**, carrying its version and revision date.
+- **A next action on every page**, including the one whose action is the phone
+  number because the business has no booking system.
+
+### Cold start belongs in both
+
+As a fixture it proves the model degrades honestly with nothing in it. As demo
+content it answers the question an owner most wants answered: *what does my site
+look like on the day I have nothing?*
+
+That is a selling point, not only a test. Most themes answer it badly and none of
+them admit it.
+
+### No invented proof
+
+A model containing a type whose whole purpose is customer-verified proof cannot
+ship invented examples of it. A testimonial written by the theme author is a
+fabricated review with a neutral filename on it.
+
+So the demo carries **no testimonials, no case studies, no ratings and no review
+counts.** Not because they are hard, but because every honest version of them is
+either empty or invented — and the business that has none is the one worth showing
+anyway.
+
+Marking rules for demo content:
+
+- the business is unmistakably fictional and flagged as sample content in config
+- telephone numbers use the 555 reservation
+- nothing in it could be lifted into a client site and pass as that client's
