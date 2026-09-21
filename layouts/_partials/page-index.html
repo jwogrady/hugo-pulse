@@ -1,0 +1,35 @@
+{{- /*
+Renders a list of pages as a numbered index. Ordinals are drawn by a CSS
+counter, so nothing here tracks position.
+
+@context {page slice} pages The pages to list.
+@context {string} label Optional uppercase label above the list.
+
+@example: {{ partial "page-index.html" (dict "pages" .Pages) }}
+*/ -}}
+
+{{- $pages := .pages }}
+{{- $label := .label }}
+
+{{- with $pages }}
+  <section class="index-section">
+    {{- with $label }}
+      <h2 class="label index-section__label">{{ . }}</h2>
+    {{- end }}
+    <ol class="index">
+      {{- range . }}
+        <li class="index-item">
+          <h3 class="index-item__title"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
+          {{- if not .Date.IsZero }}
+            <time class="index-item__date" datetime="{{ .Date | time.Format "2006-01-02T15:04:05-07:00" }}">
+              {{- .Date | time.Format "02.01.2006" -}}
+            </time>
+          {{- end }}
+          {{- with .Summary }}
+            <div class="index-item__summary">{{ . }}</div>
+          {{- end }}
+        </li>
+      {{- end }}
+    </ol>
+  </section>
+{{- end }}

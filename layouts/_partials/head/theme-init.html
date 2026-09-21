@@ -1,0 +1,15 @@
+{{- /*
+Applies a stored colour-scheme preference before first paint, so a reader who
+has pinned a theme never sees a flash of the other one. Deliberately inline and
+render-blocking: an external script would arrive too late.
+*/ -}}
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem('hugo-pulse:theme');
+      if (stored === 'light' || stored === 'dark') {
+        document.documentElement.setAttribute('data-theme', stored);
+      }
+    } catch (e) {}
+  })();
+</script>

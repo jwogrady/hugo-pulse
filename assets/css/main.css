@@ -1,15 +1,12 @@
+@import "base/reset.css";
+@import "base/tokens.css";
+@import "base/typography.css";
+@import "layout/shell.css";
 @import "components/header.css";
+@import "components/menu.css";
+@import "components/theme-toggle.css";
+@import "components/index.css";
+@import "components/page.css";
+@import "components/prose.css";
+@import "components/terms.css";
 @import "components/footer.css";
-
-body {
-  color: #222;
-  font-family: sans-serif;
-  line-height: 1.5;
-  margin: 1rem;
-  max-width: 768px;
-}
-
-a {
-  color: #00e;
-  text-decoration: none;
-}
