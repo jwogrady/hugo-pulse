@@ -27,9 +27,7 @@
     "num date"
     "num summary";
   grid-template-columns: var(--index-num) minmax(0, 1fr);
-  margin-inline: calc(var(--space-3) * -1);
   padding-block: var(--space-5);
-  padding-inline: var(--space-3);
   transition: background-color 0.15s ease;
 }
 
@@ -109,4 +107,10 @@
     padding-block-start: 0.5em;
     text-align: right;
   }
+}
+
+/* Section, taxonomy and term pages already close their header with a rule;
+   the list should not draw a second one directly beneath it. */
+.page-header + .index-section .index {
+  border-top: 0;
 }
