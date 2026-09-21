@@ -1,16 +1,24 @@
+# Every root-level key must stay ABOVE the first [table] header. TOML scopes
+# bare keys to the most recent table, so a root setting written below one is
+# silently swallowed as an unknown key of that table — no error, no warning.
+
 baseURL = 'https://example.org/'
 locale = 'en-US'
 title = 'Meridian Field Services'
+
+# Unset, Hugo uses the build machine's zone and the same commit renders
+# different times on a laptop and in CI.
+timeZone = 'America/Chicago'
+
+# Documents are checked against their own revision date: if the file changed
+# after `revised`, the standard moved without anyone being told. Needs GitInfo.
+enableGitInfo = true
 
 # Dates come from front matter and nowhere else. Hugo otherwise falls back
 # through publishdate, lastmod and modified, and what those resolve to depends
 # on the checkout rather than on the content.
 [frontmatter]
   date = ['date']
-
-# Unset, Hugo uses the build machine's zone and the same commit renders
-# different times on a laptop and in CI.
-timeZone = 'America/Chicago'
 
 # The trunk: what every branch shares. See CONTENT-MODEL.md.
 [params]

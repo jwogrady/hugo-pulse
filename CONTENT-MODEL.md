@@ -432,18 +432,63 @@ item is special.
 - **`alt` is structural.** `ImageObject` needs it, which is why it is the one
   required media param.
 
-## Pages
+## Pages and posts
 
-Leaves. Hierarchical, arbitrary depth — a page that acquires children has become a
-branch and declares for them, per [Inheritance](#inheritance).
+**At the storage layer there is no difference.** Both are items. One choice
+separates them — hierarchical or not — and three things follow from it.
 
-Static: outside the dated stream, absent from feeds, and carrying no taxonomy. A
-page is found by navigating to it, which is what the tree is for. Pages may have
-dates, but nothing sorts or groups by them.
+| | page | post |
+|---|---|---|
+| structure | folders; the shape of the folder **is** the navigation | flat |
+| navigation | derived from the tree; stable | derived from taxonomy; changes often |
+| lifecycle | a **document** — a snapshot, where provenance matters | a **record** — what is published now is what matters |
 
-Structurally: a leaf is `index.md` in its own directory when it carries media, or a
-plain `.md` file when it does not. The directory tree *is* the hierarchy — nothing
-in front matter declares a parent, so the structure cannot disagree with itself.
+The first two rows are mechanics. The third decides how the site is run, and most
+content models leave it out entirely.
+
+### Documents and records
+
+**A page is a document.** It states how things are at a moment — a policy, a price
+list, a specification, a scope of work. Someone read a version of it and acted on
+it, and which version they saw matters.
+
+> Changing a document without version control is like changing the standard
+> without telling anyone.
+
+**A post is a record.** You edit it, you add to it, you correct it. History exists
+for credit and blame, not for truth. Nobody asks which version of a job note was
+live in March; they ask what it says now.
+
+That distinction settles three things:
+
+| | document | record |
+|---|---|---|
+| an edit needs | a version, a date and a note | nothing |
+| the prior state | stays reachable, or is at least identifiable | is git's business |
+| "last updated" | is **content** — part of what the page says | is metadata |
+
+### Document fields
+
+| field | type | required | notes |
+|---|---|---|---|
+| `version` | string | no | required once anyone relies on the page |
+| `effective` | date | no | when this version took effect |
+| `revised` | date | no | when it was last revised |
+| `supersedes` | path | no | the version this replaces, where it is kept |
+
+### The check
+
+With `enableGitInfo`, the theme compares a document's last commit date against its
+own `revised` date. **A document that changed after its stated revision warns.**
+It has been altered without saying so.
+
+This is the mechanical form of the rule. The site cannot stop someone editing a
+standard quietly, but it can refuse to be quiet about it.
+
+Records are exempt. A post that changed after its date has simply been edited,
+which is what posts are for.
+
+### Page fields
 
 | field | type | required | notes |
 |---|---|---|---|
@@ -451,23 +496,14 @@ in front matter declares a parent, so the structure cannot disagree with itself.
 | `summary` | string | no | falls back to the rendered summary |
 | `weight` | int | no | order among siblings; unset sorts last, then by title |
 | `components` | list of paths | no | see [Components](#components) |
-| `sideMenu` | bool | no | default `true`; `false` hides this page from the side menu without unpublishing it |
-| `menu` | string | no | see [Menus](#menus) |
+| `nav` | bool | no | default `true`; `false` hides the page from tree navigation without unpublishing it |
+| `menu` | string | no | `top` or `footer` — see [Menus](#menus) |
 
-The hierarchy drives URL structure, breadcrumbs and the side menu. One tree, three
-consumers — which is why the tree is the only place the relationship is stated.
+Structurally: a leaf is `index.md` in its own directory when it carries media, or a
+plain `.md` file when it does not. The directory tree *is* the hierarchy — nothing
+in front matter declares a parent, so the structure cannot disagree with itself.
 
-A page with no children, no components and no media is the common case.
-
-## Posts
-
-Non-hierarchical. Flat, dated, and classified only by tags.
-
-The dated stream: reverse-chronological, timestamped, and the only type that
-appears in feeds. A post is found by recency or by subject, never by position —
-there is no position.
-
-A post never has children. If something needs a child, it is a page.
+### Post fields
 
 | field | type | required | notes |
 |---|---|---|---|
@@ -476,6 +512,8 @@ A post never has children. If something needs a child, it is a page.
 | `tags` | list | no | **subjects** — see [Taxonomies](#taxonomies) |
 | `summary` | string | no | |
 | `components` | list of paths | no | |
+
+Posts are the only type that appears in feeds.
 
 ## Media
 
@@ -520,24 +558,40 @@ A page with twelve images and a page with none are both normal.
 
 ## Menus
 
-Two menus, each derived from a different thing. Neither is hand-maintained as a
-flat list of links.
+**Two. Top navigation and footer.** That is the whole list.
 
-**Top — sections.** The site's top-level sections. Order by `weight`. A section
-appears here unless it opts out. This is the one menu that may also be declared in
-config, for external links and for pages that must appear out of tree order.
+Side navigation is not a menu. It is the folder tree rendering itself. Pages
+already declare their structure by where they sit, so a side nav maintained as its
+own list would be a second source of truth for something the filesystem already
+knows — and the two would drift, silently, in the direction of whichever one
+somebody remembered to update.
 
-**Side — parent and children.** Contextual to wherever the reader is: the current
-branch of the page hierarchy, its siblings and its children. Present only on pages
-that have a parent or children. Order by `weight`, then title.
+| menu | built from |
+|---|---|
+| `top` | top-level sections, plus anything declaring `menu = "top"` |
+| `footer` | anything declaring `menu = "footer"` |
 
-Front matter control:
+Order by `weight`. `nav = false` removes a page from tree navigation without
+unpublishing it.
 
-- `weight` orders within both
-- `sideMenu = false` removes a page from the side menu but not from the site
-- `menu = "top"` forces a non-section page into the top menu
+Posts have no menu presence. They are reached by recency, by taxonomy, and by being
+linked to.
 
-Posts have no menu presence. They are reached through their section and their tags.
+## Templates are forms
+
+A template is a form. Fields fill it.
+
+The content does not know which template it lands in. The template does not know
+what content it will get — only what the type grants it access to. That is the
+bound from [Types](#types), stated from the other side: the type declares what is
+available, the template declares what it needs, and neither reaches past the
+contract between them.
+
+**The header assembles the sources** — styles, scripts, the schema graph, the
+template itself — so that nothing downstream has to know where anything came from.
+
+A template that works with exactly one piece of content is not a form. It is that
+content, written in Go.
 
 ## Components
 

@@ -3,6 +3,12 @@ title = 'Contact'
 date = 2026-01-05T11:30:00-06:00
 summary = 'One number, answered by a person.'
 weight = 40
+
+# A document: people act on this. Changing it without moving `revised` is
+# changing the standard without telling anyone.
+version = '2.1'
+effective = 2026-01-05
+revised = 2026-01-05
 +++
 
 **(608) 555-0117** — normal hours are 7am to 5pm, Monday to Friday. The same
