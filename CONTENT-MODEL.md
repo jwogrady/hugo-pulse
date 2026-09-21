@@ -421,14 +421,112 @@ adding one must never require touching a page that does not use it.
 | `faq` | a list of `{question, answer}` |
 | `embed` | third-party media by URL |
 
+## Navigation and intent
+
+Taxonomy here is not a filing exercise. It exists so that search engines can crawl
+a clean structure and so that a customer lands on the version of a service that
+matches why they are looking. Where those two pull apart, this section says which
+wins.
+
+**Pulse makes these calls so that client sites do not have to.** Getting them wrong
+is how service sites end up with nine hundred thin pages and a manual action.
+
+### Intent has dimensions, and they are not one bag
+
+*Who the customer is* and *what is happening to them right now* are different
+questions, and a single list of "categories" conflates them:
+
+| dimension | terms | changes |
+|---|---|---|
+| `audience` | Residential, Commercial | the whole framing — who decides, how it is priced, what proof matters |
+| `response` | Emergency, After Hours, Scheduled | what the reader is doing this minute |
+
+A homeowner at 2am and a facilities manager planning next year's budget may need
+the same work done and will not read the same page. Mixing those into one taxonomy
+produces a term list that answers neither.
+
+`response` deliberately avoids the name `availability`, which schema.org has
+already spent on stock levels.
+
+### Three mechanisms, chosen by job
+
+| mechanism | indexed | use for |
+|---|---|---|
+| **Section** (branch) | always | a destination with its own copy and real search demand |
+| **Taxonomy term** | `noindex, follow` by default | an attribute, for filtering and internal linking |
+| **Curated reference** | n/a | a page that lists items by path, without containing them |
+
+Taxonomy term pages are templated lists. They are weak destinations and always
+will be, because nothing on them was written for the person who landed there. So
+the SEO weight goes on **authored** pages, and taxonomies do the mechanical work of
+filtering and cross-linking.
+
+A term is promoted to indexed only when it earns it: an authored introduction, and
+enough items that the page is not one row. Promotion is a decision someone makes,
+never a default.
+
+### The rule that keeps the site small
+
+**Pulse never auto-generates an intersection.**
+
+No service × area. No audience × response. No "Commercial Emergency Plumbing in
+Crawford County" unless a person sat down and wrote one.
+
+Nine counties times three services is twenty-seven pages that differ by a place
+name. That is the single most common way a local service site is penalised, and it
+is always built with good intentions — every one of those pages was going to rank
+for something.
+
+A combination page exists when someone has something to say about the combination.
+Then it is an ordinary authored page in the tree, with its own copy, and it is
+indexed like any other.
+
+### How a service serves two audiences
+
+When the content genuinely differs — different pricing model, different process,
+different proof — the service becomes a branch and the audiences become its
+children:
+
+```
+services/hvac-maintenance/
+  _index.md          the service
+  commercial.md      contract pricing, condition reports, a facilities reader
+  residential.md     per-visit pricing, a homeowner reader
+```
+
+That is the same leaf-becomes-branch rule as everywhere else, and it triggers on
+the same test: does this need its own page, or is it a paragraph?
+
+When the content does not differ, one page carries both and the `audience`
+taxonomy records that it serves both. **Splitting a page that has nothing new to
+say is how thin content gets made.**
+
+### Curated landing pages
+
+`/commercial/` is an authored page, not a term listing. It has its own copy about
+working with commercial customers, and it references the services that apply by
+path.
+
+That gives the destination something to rank on, keeps one source of truth for
+each service, and means adding a service to the commercial offering is a line in a
+front matter list rather than a new page.
+
 ## Taxonomies
 
-| taxonomy | applies to | means |
-|---|---|---|
-| `tags` | **posts only** | the *subjects* of a post |
+| taxonomy | applies to | means | indexed |
+|---|---|---|---|
+| `tags` | **posts only** | the *subjects* of a post | on promotion |
+| `audience` | services | who the customer is | on promotion |
+| `response` | services | how fast and when | `noindex` |
+| `service-areas` | services | where it is offered | on promotion |
 
 Pages are classified by their position in the tree. They do not carry tags; a page
 that wants to be found by subject is a post.
+
+`service-areas` is the one most likely to be misused. It records where a service is
+offered so a reader can check; it is **not** a licence to generate a page per area.
+An area earns an indexed page by having something written about it — a real branch,
+real jobs, real photographs — and nine counties will not all clear that bar.
 
 `tags` means subjects — used sparingly, repeated deliberately, meaningful by
 frequency. It is not a keyword bag. This is the same meaning the Spectrum theme

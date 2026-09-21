@@ -6,7 +6,8 @@ summary = 'Burst lines, failed heat, no water. We answer nights and weekends acr
 serviceType = 'Emergency plumbing and mechanical repair'
 bookingUrl = 'https://example.org/contact'
 
-service-categories = ['Emergency', 'Residential', 'Commercial']
+audience = ['Residential', 'Commercial']
+response = ['Emergency', 'After Hours']
 service-areas = [
   'Crawford County', 'Vernon County', 'Grant County', 'Richland County',
   'Iowa County', 'Sauk County', 'La Crosse County', 'Monroe County',

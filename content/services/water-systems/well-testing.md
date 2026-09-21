@@ -7,7 +7,8 @@ serviceType = 'Water quality testing'
 price = 180
 currency = 'USD'
 
-service-categories = ['Residential']
+audience = ['Residential']
+response = ['Scheduled']
 service-areas = ['Crawford County']
 
 weight = 10

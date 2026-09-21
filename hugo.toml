@@ -29,16 +29,23 @@ timeZone = 'America/Chicago'
     name = 'Meridian Field Services'
     sameAs = []
 
+# Intent has dimensions; one bag cannot carry them. See CONTENT-MODEL.md.
 [taxonomies]
   tag = 'tags'
-  service-category = 'service-categories'
-  service-area = 'service-areas'
+  audience = 'audience'          # who the customer is
+  response = 'response'          # how fast, and when
+  service-area = 'service-areas' # where it is offered
 
 [menus]
   [[menus.main]]
     name = 'Services'
     pageRef = '/services'
     weight = 10
+
+  [[menus.main]]
+    name = 'Commercial'
+    pageRef = '/commercial'
+    weight = 15
 
   [[menus.main]]
     name = 'Notes'

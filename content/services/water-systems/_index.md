@@ -5,7 +5,8 @@ summary = 'Private wells, testing and treatment. Rural supply is its own trade a
 
 serviceType = 'Private water supply installation and treatment'
 
-service-categories = ['Residential']
+audience = ['Residential']
+response = ['Scheduled']
 service-areas = ['Crawford County']
 
 format = 'listing'
