@@ -46,6 +46,40 @@ downstream, which is why governance is the part that belongs in the theme.
 guesses at it is worse than no check — it would be wrong confidently, and people
 would write to satisfy it.
 
+### How a check has to observe
+
+**A check that reads the same file the author reads is not an independent
+observation. It is the author's intent, restated.**
+
+Every check here must assert against the value that was *consumed*, never the one
+that was *declared*. The two look identical until they differ, and the case where
+they differ is the one the check exists for.
+
+This is not theoretical. `enableGitInfo = true` sat in this repo's `hugo.toml`,
+visible to anyone reading the file, and Hugo discarded it — TOML had scoped it to
+the `[frontmatter]` table above. A check grepping the file for `enableGitInfo`
+would have passed. `hugo config --format json` reported it absent. The Spectrum
+session then found the same flaw live in its own suite: `check.sh` asserted
+`timeZone` by regexing `hugo.toml`, so the exact failure it existed to prevent
+could pass straight through it.
+
+The rule has teeth here because of inheritance. A section that states no `schema`
+is not failing — it may be resolving one from the trunk. A section that states one
+may be having it overridden. So:
+
+| check this | not this |
+|---|---|
+| the resolved value after trunk → branch → leaf | what the file says |
+| `hugo config` output | the config file's text |
+| a reference that resolved | a reference that is present |
+| what a view received | what a type declared |
+
+Two remedies, and they are different:
+
+- **Assert the effective value** — for a setting that may be silently discarded.
+- **Assert against the thing that consumed it, never the thing that declared it** —
+  for a check that could otherwise agree with the author by construction.
+
 ### Exposing the unfinished
 
 The theme builds a governance view in development only, never published: every
