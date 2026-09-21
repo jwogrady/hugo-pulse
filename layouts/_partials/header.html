@@ -1,2 +1,11 @@
-<h1>{{ site.Title }}</h1>
-{{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+{{- /* The site title is the h1 on the home page only; elsewhere the page's own
+title holds that rank. */ -}}
+{{- if .IsHome }}
+  <h1 class="site-title"><a href="{{ "" | relURL }}">{{ site.Title }}</a></h1>
+{{- else }}
+  <p class="site-title"><a href="{{ "" | relURL }}">{{ site.Title }}</a></p>
+{{- end }}
+<div class="site-header__end">
+  {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+  {{ partial "theme-toggle.html" . }}
+</div>

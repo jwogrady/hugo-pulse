@@ -1,10 +1,7 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
-    </section>
-  {{ end }}
+  <header class="page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Content }}<div class="lede">{{ . }}</div>{{ end }}
+  </header>
+  {{ partial "page-index.html" (dict "pages" .Pages) }}
 {{ end }}

@@ -1,9 +1,6 @@
 {{ define "main" }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
-    </section>
+  {{ with .Content }}
+    <div class="home-lede">{{ . }}</div>
   {{ end }}
+  {{ partial "page-index.html" (dict "pages" site.RegularPages "label" (T "index" | default "Index")) }}
 {{ end }}

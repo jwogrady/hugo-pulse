@@ -1,4 +1,10 @@
-footer {
-  border-top: 1px solid #222;
-  margin-top: 1rem;
+.site-footer {
+  border-top: var(--rule-width) solid var(--rule-strong);
+  padding-block: var(--space-5);
+}
+
+.site-footer p {
+  color: var(--ink-faint);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
 }

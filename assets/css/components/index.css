@@ -1,0 +1,116 @@
+/* The numbered index: the spine of every list page. Ordinals come from a CSS
+   counter so the templates stay free of position bookkeeping. */
+
+.index-section + .index-section {
+  margin-block-start: var(--space-8);
+}
+
+.index-section__label {
+  margin-block-end: var(--space-4);
+}
+
+.index {
+  border-top: var(--rule-width) solid var(--rule-strong);
+  counter-reset: index;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.index-item {
+  border-bottom: var(--rule-width) solid var(--rule);
+  column-gap: var(--space-4);
+  counter-increment: index;
+  display: grid;
+  grid-template-areas:
+    "num title"
+    "num date"
+    "num summary";
+  grid-template-columns: var(--index-num) minmax(0, 1fr);
+  padding-block: var(--space-5);
+  transition: background-color 0.15s ease;
+}
+
+.index-item:hover {
+  background-color: var(--paper-alt);
+}
+
+.index-item::before {
+  color: var(--ink-faint);
+  content: counter(index, decimal-leading-zero);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  grid-area: num;
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-normal);
+  padding-block-start: 0.35em;
+}
+
+.index-item__title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  grid-area: title;
+}
+
+.index-item__title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.index-item:hover .index-item__title a {
+  color: var(--accent);
+}
+
+.index-item__date {
+  color: var(--ink-faint);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  grid-area: date;
+  letter-spacing: var(--tracking-wide);
+  padding-block-start: var(--space-1);
+}
+
+.index-item__summary {
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+  grid-area: summary;
+  max-width: var(--measure);
+  padding-block-start: var(--space-3);
+}
+
+/* Summaries are clamped so every row in the index keeps the same rhythm,
+   however long the source page's summary happens to be. */
+.index-item__summary > * {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.index-item__summary > * + * {
+  display: none;
+}
+
+/* Wide viewports pull the date out into its own right-hand column, which is
+   what turns the list into a proper grid rather than a stack. */
+@media (min-width: 48rem) {
+  .index-item {
+    grid-template-areas:
+      "num title date"
+      "num summary date";
+    grid-template-columns: var(--index-num) minmax(0, 1fr) var(--index-date);
+  }
+
+  .index-item__date {
+    padding-block-start: 0.5em;
+    text-align: right;
+  }
+}
+
+/* Section, taxonomy and term pages already close their header with a rule;
+   the list should not draw a second one directly beneath it. */
+.page-header + .index-section .index {
+  border-top: 0;
+}

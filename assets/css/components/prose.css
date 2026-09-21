@@ -1,0 +1,113 @@
+/* Rendered Markdown. Constrained to a reading measure and set on the same
+   vertical rhythm as the rest of the grid. */
+
+.prose {
+  max-width: var(--measure);
+}
+
+.prose > * + * {
+  margin-block-start: var(--space-4);
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin-block-start: var(--space-7);
+}
+
+.prose h2 {
+  font-size: var(--text-2xl);
+}
+
+.prose h3 {
+  font-size: var(--text-xl);
+}
+
+.prose h4 {
+  font-size: var(--text-lg);
+}
+
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.prose ul,
+.prose ol {
+  padding-inline-start: var(--space-5);
+}
+
+.prose li + li {
+  margin-block-start: var(--space-2);
+}
+
+.prose blockquote {
+  border-inline-start: 2px solid var(--accent);
+  color: var(--ink-muted);
+  padding-inline-start: var(--space-4);
+}
+
+.prose img {
+  border: var(--rule-width) solid var(--rule);
+  margin-block: var(--space-6);
+  width: 100%;
+}
+
+.prose figure {
+  margin-block: var(--space-6);
+}
+
+.prose figcaption {
+  color: var(--ink-faint);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  margin-block-start: var(--space-2);
+}
+
+.prose code {
+  background-color: var(--paper-alt);
+  padding: 0.1em 0.3em;
+}
+
+.prose pre {
+  background-color: var(--paper-alt);
+  border: var(--rule-width) solid var(--rule);
+  overflow-x: auto;
+  padding: var(--space-4);
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+
+.prose table {
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  width: 100%;
+}
+
+.prose th,
+.prose td {
+  border-bottom: var(--rule-width) solid var(--rule);
+  padding: var(--space-2) var(--space-3);
+  text-align: start;
+}
+
+.prose th {
+  border-bottom-color: var(--rule-strong);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+/* Once there is room beside the text column, images step out to the right of
+   the reading measure. Asymmetric by design; it stays inside the shell because
+   48rem is narrower than the shell's content box at this breakpoint. */
+@media (min-width: 64rem) {
+  .post .prose > p:has(img),
+  .post .prose > figure {
+    max-width: none;
+    width: 48rem;
+  }
+}

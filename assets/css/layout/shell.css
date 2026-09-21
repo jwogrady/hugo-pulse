@@ -1,0 +1,24 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.shell {
+  margin-inline: auto;
+  max-width: var(--shell-max);
+  padding-inline: var(--shell-pad);
+  width: 100%;
+}
+
+.site-main {
+  flex: 1 0 auto;
+  padding-block-end: var(--space-8);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --shell-pad: var(--space-6);
+  }
+}

@@ -4,14 +4,21 @@
   {{ partial "head.html" . }}
 </head>
 <body>
-  <header>
-    {{ partial "header.html" . }}
+  <a class="skip-link" href="#main">{{ T "skipToContent" | default "Skip to content" }}</a>
+  <header class="site-header">
+    <div class="shell site-header__inner">
+      {{ partial "header.html" . }}
+    </div>
   </header>
-  <main>
-    {{ block "main" . }}{{ end }}
+  <main class="site-main" id="main">
+    <div class="shell">
+      {{ block "main" . }}{{ end }}
+    </div>
   </main>
-  <footer>
-    {{ partial "footer.html" . }}
+  <footer class="site-footer">
+    <div class="shell">
+      {{ partial "footer.html" . }}
+    </div>
   </footer>
 </body>
 </html>
