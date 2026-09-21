@@ -14,6 +14,9 @@ timeZone = 'America/Chicago'
 # after `revised`, the standard moved without anyone being told. Needs GitInfo.
 enableGitInfo = true
 
+# The theme ships layouts/robots.txt, which refuses indexing outside production.
+enableRobotsTXT = true
+
 # Dates come from front matter and nowhere else. Hugo otherwise falls back
 # through publishdate, lastmod and modified, and what those resolve to depends
 # on the checkout rather than on the content.

@@ -1,0 +1,14 @@
+{{- /*
+A staging copy that gets indexed competes with the real site for its own terms,
+and the duplicate is often the one that wins. Anything not built in production
+refuses indexing outright; production allows everything and points at the sitemap.
+*/ -}}
+{{- if eq hugo.Environment "production" -}}
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}
+{{- else -}}
+User-agent: *
+Disallow: /
+{{- end }}

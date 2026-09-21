@@ -11,8 +11,21 @@
 [context.deploy-preview]
   command = "hugo --gc --minify --buildFuture -b $DEPLOY_PRIME_URL"
 
+  # Belt and braces with layouts/robots.txt. A header cannot be ignored the way
+  # a robots directive can, and a preview that gets indexed competes with the
+  # real site for its own terms.
+  [[context.deploy-preview.headers]]
+    for = "/*"
+    [context.deploy-preview.headers.values]
+      X-Robots-Tag = "noindex, nofollow"
+
 [context.branch-deploy]
   command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
+
+  [[context.branch-deploy.headers]]
+    for = "/*"
+    [context.branch-deploy.headers.values]
+      X-Robots-Tag = "noindex, nofollow"
 
 [[headers]]
   for = "/*"
