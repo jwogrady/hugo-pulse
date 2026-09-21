@@ -12,6 +12,10 @@ reader = 'Someone deciding whether to trust us with their building.'
 voice = 'Third person, short. What they actually do, not what their title implies.'
 views = ['full', 'teaser', 'card']
 
+[action]
+  label = 'Ask for one of us by name'
+  url = 'tel:+16085550117'
+
 [media]
   required = false
   aspect = '1:1'

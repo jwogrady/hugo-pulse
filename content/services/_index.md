@@ -10,6 +10,12 @@ voice = 'Second person, present tense. States scope and exclusions plainly. Neve
 style = 'catalogue'
 views = ['full', 'teaser', 'card']
 
+[action]
+  label = 'Book a visit'
+  # Housecall Pro today. Changing that is this line, not a rebuild.
+  url = 'https://book.example.org/meridian'
+  fallback = 'Or call (608) 555-0117 and speak to whoever is in.'
+
 [media]
   required = false
   aspect = '16:9'

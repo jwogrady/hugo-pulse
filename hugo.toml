@@ -20,6 +20,12 @@ timeZone = 'America/Chicago'
   voice = 'Plain, specific, unhurried. States what was done and what it cost.'
   views = ['full', 'teaser']
 
+  # The default next action. Every page inherits one; the fallback is the thing
+  # that still works when the integration does not.
+  [params.action]
+    label = 'Call (608) 555-0117'
+    url = 'tel:+16085550117'
+
   [params.media]
     required = false
     profile = 'lead'

@@ -1,11 +1,59 @@
 # Pulse content model
 
-The generic content substrate that status26.com and every client site built on
-Pulse inherits.
+**Pulse is a content governance layer that happens to render.**
 
-This is a contract, not a suggestion. Templates may only read fields defined here,
-and a site that supplies nothing but the required fields must still build and still
-look deliberate.
+Most themes are presentation with content poured into them. Pulse is the other way
+round: the model, the rules and the checks are the product, and the templates are
+what makes them visible. A client inherits a set of decisions already made —
+what a page is for, what it must declare, what gets indexed, where commerce
+attaches — not a stylesheet.
+
+This document is the contract that layer enforces. Templates may only read fields
+defined here, and a site that supplies nothing but the required fields must still
+build and still look deliberate.
+
+## What the theme does
+
+| | |
+|---|---|
+| **Define** | the types, the heights, and what each declares — reader, voice, action, schema, media, views |
+| **Enforce** | required fields, resolvable references, declared views, the vocabulary gate, no generated intersections |
+| **Expose** | what is unfinished, so that a half-built site says so instead of looking done |
+| **Render** | from those declarations, never from assumptions baked into a template |
+
+Rendering is last on that list deliberately. A site can be reskinned without
+re-authoring (rule 6); it cannot be re-governed without rebuilding everything
+downstream, which is why governance is the part that belongs in the theme.
+
+### What is enforced
+
+**Build fails.** These are wrong, not incomplete:
+
+- a section without `title`, `format` or `schema`
+- a component reference that does not resolve
+- an image without `alt`
+- a view requested that its section does not declare
+- an item in a section whose `media.required` is true, with no media
+
+**Build warns.** These are unfinished, and a warning is how the site admits it:
+
+- a section with no `reader` — nobody has decided who it is for
+- a section with no `action` — the reader arrives and is offered nothing
+- a taxonomy term with no authored introduction
+- an item with no `summary` in a section that supports `teaser` or `card`
+
+**Never checked.** `voice` cannot be verified mechanically, and a check that
+guesses at it is worse than no check — it would be wrong confidently, and people
+would write to satisfy it.
+
+### Exposing the unfinished
+
+The theme builds a governance view in development only, never published: every
+warning above, grouped by section, with the page that raised it.
+
+The point is not a score. It is that "we have not decided who this section is for
+yet" should be visible while the site is being built, rather than discovered two
+years later when someone asks why the services page converts at nothing.
 
 ## What a page is for
 
@@ -31,9 +79,36 @@ that cannot find it has not done its job. That is why taxonomy uses the customer
 vocabulary rather than the industry's, and why indexation comes before everything
 else for a business that has no brand yet.
 
+**And it has to end somewhere.** A page that finds the right reader, names their
+problem and sounds like someone they trust, and then offers them nothing to do, has
+spent all its work and banked none of it. The next action is part of the page, not
+a thing bolted onto it afterwards.
+
+The action is not always a sale. A site can be a hub for stakeholders, investors or
+existing customers, and "see the address", "read the deck", "book the visit" and
+"join the list" are all conversions. What is not acceptable is *no* action.
+
 The test for whether a page should exist: **can you name the one person it is for,
-and the problem they have right now?** If not, it is a brochure page — and brochure
-pages are what most of the internet is already made of.
+the problem they have right now, and what they do next?** If not, it is a brochure
+page — and brochure pages are what most of the internet is already made of.
+
+## The order of work
+
+Boring first. Each step is worthless without the ones above it.
+
+1. **Presentable.** It renders, it reads, it works on a phone.
+2. **True.** It says who the business actually is, in terms that resonate with the
+   people it wants.
+3. **Findable.** Indexed, on the vocabulary customers actually use.
+4. **Convertible.** Every page has a next action, and the action works.
+5. **Then** traffic is worth paying for.
+
+Buying traffic into a site that fails any of 1–4 is buying visits to a page that
+cannot do anything with them. The spend is not wasted later; it is wasted
+immediately, and the report will say the channel did not work.
+
+This order is also why Pulse is built in the sequence it is built in. Content model
+before rendering, rendering before commerce, commerce as configuration.
 
 ## Scope
 
@@ -192,6 +267,7 @@ Declared in the section's `_index.md`:
 | `schema` | string | **yes** | the schema.org type its items are — see [Schema](#schema) |
 | `reader` | string | no | the one person this section is written for |
 | `voice` | string | no | how it sounds to that reader; targeting, not decoration |
+| `action` | map | no | the next action its items offer — see [Integrations](#integrations-not-projects) |
 | `style` | string | no | visual treatment key; selects the section's typographic and colour handling |
 | `media` | map | no | the media contract for items — see below |
 | `views` | list | no | which views items support; defaults to `[full, teaser]` |
@@ -453,6 +529,8 @@ adding one must never require touching a page that does not use it.
 | `gallery` | bundle images, in resource order |
 | `faq` | a list of `{question, answer}` |
 | `embed` | third-party media by URL |
+| `booking` | a label and a URL; the booking system is somebody else's |
+| `form` | fields, a submit label, and an endpoint to post to |
 
 ## Navigation and intent
 
@@ -568,6 +646,51 @@ That gives the destination something to rank on, keeps one source of truth per
 service, and means joining the commercial offering is a line in a front matter list
 rather than a new page.
 
+## Integrations, not projects
+
+Pulse does not build commerce. It provides the attachment points and gets out of
+the way.
+
+A booking page is a page with a booking component pointing at Housecall Pro. A
+contact page is a form component posting to Google Forms, which kicks off a
+marketing workflow somewhere Pulse never sees. Neither of those is a project. Both
+are configuration.
+
+| the need | Pulse provides | somebody else provides |
+|---|---|---|
+| booking | `bookingUrl`, a `booking` component | Housecall Pro, Calendly |
+| contact | a `form` component with an endpoint | Google Forms, Formspree |
+| marketing workflow | the form post that triggers it | the CRM |
+| payment | a link | Stripe, the invoicing system |
+| newsletter | a `form` component | the list host |
+
+### The rules
+
+**An integration is configuration, never code in the theme.** No vendor name
+appears in a template. Changing from one booking system to another is a front
+matter edit, not a rebuild, and no content is re-authored.
+
+**The theme never holds a secret.** Endpoints are public URLs. Anything needing a
+key belongs on the far side of the integration, not in a static site.
+
+**The page works when the integration does not.** A booking widget that fails to
+load must still leave a phone number on the page. An entity brand that is
+unreachable because a third party is down has been failed by its website, and the
+reader will not distinguish between the two.
+
+**Integrations attach to an action, and the action is declared on the section.**
+That way every item in a section offers the same next step without repeating it,
+and a section that has not declared one is visibly a section nobody has finished.
+
+### Why this is a boundary and not a preference
+
+Rule 6 says the model outlives the theme. The same argument applies harder here:
+the model has to outlive the *vendors*. Housecall Pro is a decision a business
+makes for a few years, and every client will make a different one. A theme that
+knows the name of a booking provider has put a business decision inside a
+presentation layer, and it will be wrong for the next client and eventually for
+this one.
+
 ## Taxonomies
 
 | taxonomy | applies to | means | terms |
@@ -653,6 +776,13 @@ Demo content exists to attack this model, not to flatter it. It must include:
 - **A page whose only content is components**, and one with no components at all.
 - **A site with three pages and no posts** — day one of a client engagement, which
   every client passes through and most sites handle badly.
+- **A section that declares no action**, so that the missing next step is visible
+  as an unfinished section rather than quietly absent.
+- **A page whose action is an integration, rendered as though the integration
+  failed** — the fallback is the part that has to be tested, and it is the part
+  nobody ever looks at.
+- **Two sections with different actions**, so that inheriting the trunk's default
+  and overriding it are both exercised.
 
 If the demo content contains only the cases we had in mind, the model will look
 complete and will not be.
