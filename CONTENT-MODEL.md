@@ -493,35 +493,77 @@ That distinction settles three things:
 
 ### Document fields
 
-| field | type | required | notes |
-|---|---|---|---|
-| `version` | string | no | required once anyone relies on the page |
-| `effective` | date | no | when this version took effect |
-| `revised` | date | no | when it was last revised |
-| `supersedes` | path | no | the version this replaces, where it is kept |
-| `revisions` | list of `{date, note}` | no | renders at the foot of the page |
+**Matched to the Spectrum theme's implementation** (hugo-spectrum PR #14) rather
+than invented separately. Three fields, all optional, all independent.
 
-`version`, `effective`, `revised` and `supersedes` are machine-facing — they are
-what the check reads. `revisions` is reader-facing: the change and its date, at the
-foot of the document, so that someone who relied on an earlier version can see that
-it moved and when.
+| field | type | notes |
+|---|---|---|
+| `version` | string | |
+| `revised` | date | when it was last revised |
+| `revisions` | list of `{date, note}` | renders at the foot, newest first |
 
-Both halves are needed. Fields without a visible block record the change where only
-a build sees it; a block without fields cannot be checked. **Shared with the
-Spectrum theme** — its citation convention is the same foot-block, and the two
-should not diverge.
+```toml
+version = "3"
+revised = 2026-09-19
 
-### The check
+[[revisions]]
+  date = 2026-09-19
+  note = "Callout rate raised from $140 to $165."
+[[revisions]]
+  date = 2026-09-18
+  note = "Added the after-hours exclusion, which was verbal before."
+```
 
-With `enableGitInfo`, the theme compares a document's last commit date against its
-own `revised` date. **A document that changed after its stated revision warns.**
-It has been altered without saying so.
+`effective` and `supersedes` are **reserved and implemented nowhere.** Neither
+theme had a case that exercised them, and three fields that render beat five where
+two do not. Add them when a standard genuinely supersedes another, and tell the
+other theme.
 
-This is the mechanical form of the rule. The site cannot stop someone editing a
-standard quietly, but it can refuse to be quiet about it.
+Rendered as an `<ol>`, newest first, because the order is the point. The machine
+`datetime` stays ISO while the visible form is the site's own date format, and both
+resolve through the site timezone like every other date — so a revision cannot file
+under a day the archive does not have.
 
-Records are exempt. A post that changed after its date has simply been edited,
-which is what posts are for.
+Three decisions, taken from Spectrum's implementation:
+
+**All three fields are independent.** A page with `revised` and no list prints the
+date and no notes. That is the honest rendering of *this changed and nobody wrote
+down what* — visible, and visibly thin. Requiring the list would only produce
+`note = "Updated"`.
+
+**Documents only, asserted in both directions.** The negative case is the one with
+teeth: a post carrying a revision history claims an accountability the record does
+not have. **A post that renders one fails the build.**
+
+**Conversion pages count as documents.** A price is the part of an offer a reader
+is most entitled to see the history of.
+
+### The check, and where it can live
+
+With `enableGitInfo`, compare a document's last commit date against its own
+`revised` date and warn when the file changed afterwards. The site cannot stop
+someone editing a standard quietly, but it can refuse to be quiet about it.
+
+**This check cannot run in a theme repository, and that took an outside eye to
+see.** Demo content carries fictional dates by design, and the commit introducing
+them is necessarily a different day. Measured here: `contact.md` declares
+`revised = 2026-01-05`, git records the commit as `2026-09-21`, and the check fires
+— on a correct repository, permanently. A check that cries wolf gets switched off,
+which is worse than not having one. Caught by the Spectrum session before either
+of us shipped it.
+
+So it is **scoped to real documents**, by two guards:
+
+- skipped when `sampleContent` is set, at site level or on the page
+- otherwise active, which means it is live in a client site and dormant here
+
+The alternative — comparing against the commit that last touched the *body* rather
+than the file — is more precise, since a front-matter-only edit bumping `revised`
+is not a silent change and is what trips the naive version. It is also not
+reachable from a Hugo template, so it would mean a check outside the build.
+
+Records are exempt regardless. A post that changed after its date has just been
+edited, which is what posts are for.
 
 ### Page fields
 
@@ -967,6 +1009,20 @@ So the demo carries **no testimonials, no case studies, no ratings and no review
 counts.** Not because they are hard, but because every honest version of them is
 either empty or invented — and the business that has none is the one worth showing
 anyway.
+
+**Machine-readable fabrication is the worse half**, and it is the half that gets
+shipped by accident. A written testimonial is at least legible as prose someone
+composed. A `rating` of 4.8 from 37 reviews becomes an `AggregateRating` in the
+JSON-LD, and a search engine will act on it — in a directory built to be copied.
+The Spectrum session found exactly that in its own demo and removed it.
+
+The line that survives: **a fictional business may make claims about its own
+operations; it may not carry proof attributed to customers, and nothing invented
+may enter the structured data.** What a callout costs is the demo doing its job.
+What a customer thought of it is fabrication with a neutral filename.
+
+Coverage of those capabilities belongs in the synthetic fixtures, which are
+adversarial, throwaway, and never copied into anything.
 
 Marking rules for demo content:
 

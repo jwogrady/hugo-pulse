@@ -6,9 +6,12 @@ weight = 40
 
 # A document: people act on this. Changing it without moving `revised` is
 # changing the standard without telling anyone.
-version = '2.1'
-effective = 2026-01-05
+version = '2'
 revised = 2026-01-05
+
+[[revisions]]
+  date = 2026-01-05
+  note = 'After-hours cover stated explicitly. It was verbal before.'
 +++
 
 **(608) 555-0117** — normal hours are 7am to 5pm, Monday to Friday. The same
