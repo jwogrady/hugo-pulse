@@ -6,7 +6,7 @@ weight = 20
 
 # This branch overrides its parent: profiles, not articles, and a required
 # square portrait where the About section asks for nothing.
-format = 'profile'
+type = 'person'
 schema = 'Person'
 reader = 'Someone deciding whether to trust us with their building.'
 voice = 'Third person, short. What they actually do, not what their title implies.'

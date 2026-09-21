@@ -1,0 +1,17 @@
+# The dated stream. Flat, tagged, and the only type that appears in feeds.
+
+name = 'post'
+schema = 'BlogPosting'
+hierarchical = false
+views = ['full', 'teaser']
+taxonomies = ['tags']
+
+[fields]
+  required = ['title', 'date']
+  optional = ['summary', 'components']
+
+[media]
+  required = false
+  aspect = '16:9'
+  max = 1
+  profile = 'lead'

@@ -8,7 +8,7 @@ serviceType = 'Private water supply installation and treatment'
 audience = ['Residential']
 service-areas = ['Crawford County']
 
-format = 'listing'
+type = 'service'
 schema = 'Service'
 reader = 'A rural homeowner who has just realised nobody inspects their water but them.'
 voice = 'Technical and cautious. Water work is regulated and the copy should read like someone who knows it.'

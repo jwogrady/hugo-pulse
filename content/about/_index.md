@@ -3,7 +3,7 @@ title = 'About'
 date = 2026-01-05T09:30:00-06:00
 summary = 'Who we are, where we came from, and who answers the phone.'
 
-format = 'article'
+type = 'page'
 schema = 'AboutPage'
 views = ['full', 'teaser']
 

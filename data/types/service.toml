@@ -1,0 +1,28 @@
+# The service type: a resource contract, not a category.
+#
+# Shipped with Pulse and inherited by every client site, so that "what a service
+# is" has one definition rather than one per deployment. A section names this
+# type; overriding more than one or two declarations means the type is wrong.
+
+name = 'service'
+schema = 'Service'
+hierarchical = true          # a service may branch into audience variants
+views = ['full', 'teaser', 'card']
+taxonomies = ['audience', 'response', 'service-areas']
+
+[fields]
+  required = ['title']
+  optional = [
+    'summary', 'serviceType', 'price', 'priceRange', 'currency',
+    'availability', 'bookingUrl', 'rating', 'weight',
+  ]
+
+[relations]
+  # Referenced by path, resolved with .GetPage — never a shadow taxonomy.
+  referencedBy = ['page.services']
+
+[media]
+  required = false
+  aspect = '16:9'
+  max = 1
+  profile = 'lead'

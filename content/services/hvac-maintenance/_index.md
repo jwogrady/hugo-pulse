@@ -9,7 +9,7 @@ priceRange = '$$'
 audience = ['Commercial', 'Residential']
 service-areas = ['Crawford County', 'Vernon County', 'Grant County']
 
-format = 'listing'
+type = 'service'
 schema = 'Service'
 views = ['full', 'teaser', 'card']
 

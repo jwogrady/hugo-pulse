@@ -112,45 +112,92 @@ before rendering, rendering before commerce, commerce as configuration.
 
 ## Scope
 
-Two ways of saying the same thing, and both are load-bearing.
+Three ways of saying the same thing, and all three are load-bearing.
+
+**Everything is an item.** One entity, one storage shape. What a thing *is* — a
+page, a post, an image, a service — is a **type** carried by the item, not a
+different kind of object. WordPress found this root structure and it is why its
+model has survived twenty years of people building things on it that nobody
+anticipated.
 
 **A website is a newspaper.** It has defined sections; each section's items share a
-media, style, format, voice and schema; and those items render in one or more
-views. The sections are where the editorial decisions live.
+reader, voice, media, format and schema; and those items render in one or more
+views.
 
 **A website is a folder tree.** Leaves are pages, branches are sections, and the
 trunk is what they all share.
 
 The newspaper frame explains what **differs** between one part of a site and
-another. The tree frame explains what is **inherited** and where it is stated. A
-decision that is hard to place in this model is usually one being made at the wrong
-height.
+another. The tree frame explains what is **inherited**, and at what height it is
+stated. The item frame explains why a template can render something it has never
+seen before.
 
 This layer defines what **every entity brand** needs, regardless of what the
 business does.
 
-Types:
+## Types
 
-| | | hierarchical |
+A type answers exactly one question:
+
+> **What does a template have access to when it renders this?**
+
+Not "what kind of content is this" — that is a filing question, and the tree
+already answers it. A type is a **resource contract**. It declares what is
+reachable, so that rendering can proceed without guessing:
+
+| a type declares | so that a view can |
+|---|---|
+| fields | read them without testing whether they exist |
+| relations | follow them, in both directions |
+| media | know whether there is any, how much, what shape |
+| taxonomies | know which ones apply |
+| views | know which renderings are legal |
+| schema | emit the right node into the graph |
+
+**A view can only render what its type grants.** That is the entire purpose of
+having types: not to categorise content, but to bound what a template is allowed
+to assume. A template reaching past its type is why themes break the moment they
+meet somebody else's content.
+
+### Built-in types
+
+| type | hierarchical | |
 |---|---|---|
-| **Pages** | the static tree | **yes** |
-| **Posts** | the dated stream | no |
-| **Media** | files, with provenance | no |
-| **Menus** | top (sections) and side (parent–child) | — |
-| **Components** | reusable blocks inserted into pages | no |
+| `page` | **yes** | the static tree |
+| `post` | no | the dated stream |
+| `media` | no | files, with provenance |
+| `menu` | — | top from sections, side from the hierarchy |
+| `component` | no | reusable blocks, no URL of their own |
 
-And four things that are not types but govern how types behave:
+### Custom types
+
+`service`, `case-study`, `person`, `location`. Defined the same way, with no new
+machinery — this is WordPress's custom post type, and it is the extension point
+that keeps the core small.
+
+**A domain type that needs a new template in order to exist is evidence the type
+system is too weak.** The test for this layer is whether a client site can add a
+service by declaring one, rather than by writing Go templates.
+
+### Where type definitions live
+
+`data/types/<name>.toml`, shipped with Pulse and inherited by every client site. A
+section names the type its items are and may override individual declarations; a
+section overriding many of them is using the wrong type.
+
+That keeps **one** definition of what a service is across every client, which is
+the reason Pulse exists rather than each site inventing its own.
+
+### The heights that govern types
+
+Not types themselves, but where a type's declarations get resolved:
 
 | | |
 |---|---|
 | **Trunk** | the site; what every branch shares, stated once |
-| **Sections** | branches; declare the media, style, format, voice and schema their leaves share |
+| **Sections** | branches; name their items' type and override what differs |
 | **Views** | the renderings an item appears in — full, teaser, card, feature, mention |
-| **Schema** | one connected JSON-LD graph; the section declares the type, the view decides what is emitted |
-
-Domain types — services, case studies, people, locations — are **out of scope
-here**. They are built on this substrate later, and any of them that cannot be
-expressed as a page plus components is a sign this layer is wrong.
+| **Schema** | one connected JSON-LD graph; the type declares the node, the view decides what is emitted |
 
 ### Lineage
 
@@ -158,6 +205,12 @@ This model is taken from [WordPress's default post
 types](https://developer.wordpress.org/themes/classic-themes/basics/post-types/),
 because that set has survived twenty years of every kind of site being built on it
 and the vocabulary is already in everyone's head.
+
+The part worth copying is not the list — it is that **everything is a post.** A
+page, an image, a menu item and a reusable block are all rows in the same table,
+distinguished by a type column. Nothing in WordPress is a special case at the
+storage layer, which is why a custom post type is a declaration rather than a
+subsystem. That is the root structure, and it is what this model takes.
 
 | Pulse | WordPress | |
 |---|---|---|
@@ -263,7 +316,7 @@ Declared in the section's `_index.md`:
 | field | type | required | notes |
 |---|---|---|---|
 | `title` | string | **yes** | |
-| `format` | string | **yes** | the shape of an item — `article`, `profile`, `record`, `listing` |
+| `type` | string | **yes** | the type its items are — the resource contract, see [Types](#types) |
 | `schema` | string | **yes** | the schema.org type its items are — see [Schema](#schema) |
 | `reader` | string | no | the one person this section is written for |
 | `voice` | string | no | how it sounds to that reader; targeting, not decoration |
